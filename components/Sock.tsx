@@ -3,23 +3,27 @@
 import { type SockConfig } from '@/lib/patterns'
 import PatternDefs from '@/components/PatternDefs'
 
-// Sock shape: right-facing, leg tube on left, toe on right, heel at bottom-left.
-// ViewBox: 0 0 310 375
+// Sock shape: right-facing. The front of the sock (right side) is a continuous
+// vertical line from cuff to instep — the heel is the only protrusion, going left.
+// ViewBox: 0 0 320 360
 const SOCK_PATH = [
-  'M 75,15',          // cuff top-left
-  'L 175,15',         // cuff top-right
-  'L 175,255',        // right side of leg
-  'C 175,292 212,298 212,318', // right ankle curve into foot top
-  'L 268,318',        // foot top-right
-  'Q 290,318 290,335', // toe top curve
-  'Q 290,352 268,352', // toe bottom curve
-  'L 62,352',         // foot bottom going left
-  'Q 28,352 28,320',  // heel bottom curve
-  'L 28,255',         // back of heel going up
-  'C 28,220 50,210 75,210', // heel top curve back to leg
-  'L 75,15',          // left side of leg
+  'M 80,20',           // cuff top-left
+  'L 175,20',          // cuff top-right
+  'L 175,268',         // right leg + instep, straight down
+  'Q 175,288 195,288', // small front-ankle curve into foot top
+  'L 285,288',         // foot top going right
+  'Q 308,288 308,312', // toe top curve
+  'Q 308,334 285,334', // toe bottom curve
+  'L 65,334',          // foot bottom going left
+  'Q 35,334 35,305',   // heel bottom curve
+  'L 35,248',          // heel back, straight up
+  'C 35,218 58,210 80,210', // heel top curve back to leg
+  'L 80,20',           // left side of leg
   'Z',
 ].join(' ')
+
+// Visual cuff band across the top of the leg
+const CUFF_LINE_Y = 58
 
 interface SockProps {
   config: SockConfig
@@ -28,7 +32,7 @@ interface SockProps {
 export default function Sock({ config }: SockProps) {
   return (
     <svg
-      viewBox="0 0 310 375"
+      viewBox="0 0 320 360"
       width="100%"
       height="100%"
       style={{ maxHeight: '100%', maxWidth: '100%' }}
@@ -46,8 +50,8 @@ export default function Sock({ config }: SockProps) {
       <rect
         x="0"
         y="0"
-        width="310"
-        height="375"
+        width="320"
+        height="360"
         fill={`url(#pattern-${config.pattern})`}
         clipPath="url(#sock-clip)"
       />
@@ -60,6 +64,17 @@ export default function Sock({ config }: SockProps) {
         strokeWidth="3.5"
         strokeLinejoin="round"
         strokeLinecap="round"
+      />
+
+      {/* Cuff band */}
+      <line
+        x1="80"
+        y1={CUFF_LINE_Y}
+        x2="175"
+        y2={CUFF_LINE_Y}
+        stroke="#1a1a2e"
+        strokeWidth="2"
+        opacity="0.35"
       />
     </svg>
   )
