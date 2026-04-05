@@ -3,27 +3,26 @@
 import { type SockConfig } from '@/lib/patterns'
 import PatternDefs from '@/components/PatternDefs'
 
-// Sock shape: right-facing. The front of the sock (right side) is a continuous
-// vertical line from cuff to instep — the heel is the only protrusion, going left.
-// ViewBox: 0 0 320 360
+// Sock shape: right-facing.
+// The heel is the large rounded curve at the bottom of the leg — not a separate
+// protrusion. Think of the sock as a backwards-J: leg tube bends smoothly into foot.
+// ViewBox: 0 0 340 385
 const SOCK_PATH = [
-  'M 80,20',           // cuff top-left
-  'L 175,20',          // cuff top-right
-  'L 175,268',         // right leg + instep, straight down
-  'Q 175,288 195,288', // small front-ankle curve into foot top
-  'L 285,288',         // foot top going right
-  'Q 308,288 308,312', // toe top curve
-  'Q 308,334 285,334', // toe bottom curve
-  'L 65,334',          // foot bottom going left
-  'Q 35,334 35,305',   // heel bottom curve
-  'L 35,248',          // heel back, straight up
-  'C 35,218 58,210 80,210', // heel top curve back to leg
-  'L 80,20',           // left side of leg
+  'M 90,22',            // cuff back (top-left)
+  'L 185,22',           // across cuff top to front
+  'L 185,270',          // down the front of the leg / instep
+  'Q 185,298 215,298',  // front ankle curves right into foot top
+  'L 292,298',          // foot top to toe area
+  'Q 316,298 316,328',  // toe top curve
+  'Q 316,358 292,358',  // toe bottom curve
+  'L 90,358',           // foot bottom back to heel
+  'C 48,358 48,235 90,235', // heel: large cubic bezier, the backwards-J curve
+  'L 90,22',            // back of leg straight up to cuff
   'Z',
 ].join(' ')
 
-// Visual cuff band across the top of the leg
-const CUFF_LINE_Y = 58
+// Visual cuff band
+const CUFF_LINE_Y = 62
 
 interface SockProps {
   config: SockConfig
@@ -32,7 +31,7 @@ interface SockProps {
 export default function Sock({ config }: SockProps) {
   return (
     <svg
-      viewBox="0 0 320 360"
+      viewBox="0 0 340 385"
       width="100%"
       height="100%"
       style={{ maxHeight: '100%', maxWidth: '100%' }}
@@ -50,8 +49,8 @@ export default function Sock({ config }: SockProps) {
       <rect
         x="0"
         y="0"
-        width="320"
-        height="360"
+        width="340"
+        height="385"
         fill={`url(#pattern-${config.pattern})`}
         clipPath="url(#sock-clip)"
       />
@@ -68,9 +67,9 @@ export default function Sock({ config }: SockProps) {
 
       {/* Cuff band */}
       <line
-        x1="80"
+        x1="90"
         y1={CUFF_LINE_Y}
-        x2="175"
+        x2="185"
         y2={CUFF_LINE_Y}
         stroke="#1a1a2e"
         strokeWidth="2"
