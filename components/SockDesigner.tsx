@@ -11,8 +11,8 @@ export default function SockDesigner() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-pink-50 via-yellow-50 to-purple-50 flex items-center justify-center p-6">
       <div className="w-full max-w-3xl flex flex-col sm:flex-row gap-8 items-center sm:items-start">
-        {/* Sock preview */}
-        <div className="flex-shrink-0 w-56 h-72 sm:w-64 sm:h-80 drop-shadow-xl">
+        {/* Sock preview — wide aspect ratio matches viewBox 400×320 */}
+        <div className="flex-shrink-0 w-72 h-56 sm:w-96 sm:h-72 drop-shadow-xl">
           <Sock config={config} />
         </div>
 
